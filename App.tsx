@@ -5,6 +5,8 @@ import ProductDetail from './pages/ProductDetail';
 import Wallet from './pages/Wallet';
 import Cart from './pages/Cart';
 import Login from './pages/Login';
+import Profile from './pages/Profile';
+import Orders from './pages/Orders';
 import BottomNav from './components/BottomNav';
 import { api } from './services/mockApi';
 import { tg } from './services/telegram';
@@ -43,6 +45,8 @@ const App: React.FC = () => {
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/wallet" element={<Wallet />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/orders" element={<Orders />} />
         </Routes>
         {isRegistered && <BottomNav />}
       </div>

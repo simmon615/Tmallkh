@@ -10,6 +10,7 @@ export interface User {
     points: number; // Points (Int)
   };
   is_registered: boolean;
+  phone_number?: string;
 }
 
 export interface Product {
@@ -44,4 +45,15 @@ export interface Transaction {
   amount: number; // In cents or points
   status: 'pending' | 'success' | 'failed';
   date: string;
+}
+
+export type OrderStatus = 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
+
+export interface Order {
+  id: number;
+  total: number;
+  status: OrderStatus;
+  items: { name: string; quantity: number; price: number }[]; 
+  date: string;
+  tracking_number?: string;
 }

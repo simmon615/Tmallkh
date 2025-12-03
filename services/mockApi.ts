@@ -1,4 +1,4 @@
-import { Product, User, Transaction } from '../types';
+import { Product, User, Transaction, Order } from '../types';
 
 // Mock Data
 const MOCK_PRODUCTS: Product[] = [
@@ -48,7 +48,9 @@ let mockUser: User = {
   id: 1,
   telegram_id: 12345678,
   first_name: "Sopheak",
+  username: "sopheak_dev",
   is_registered: true,
+  phone_number: "+855 12 999 999",
   wallets: {
     default: 120.00, // Top-up balance
     shopping: 45.00, // Exchange balance
@@ -61,6 +63,37 @@ const mockTransactions: Transaction[] = [
   { id: 2, type: 'topup', amount: 10000, status: 'success', date: '2023-10-20' }, // stored in cents usually, but here float for simplicity of display
 ];
 
+const mockOrders: Order[] = [
+  {
+    id: 1001,
+    total: 301.50,
+    status: 'shipped',
+    date: '2023-10-28',
+    tracking_number: 'LUN-888-999',
+    items: [
+      { name: "Wireless Noise Cancelling Headphones", quantity: 1, price: 299.00 }
+    ]
+  },
+  {
+    id: 1002,
+    total: 45.00,
+    status: 'delivered',
+    date: '2023-10-15',
+    items: [
+      { name: "Organic Green Tea Set", quantity: 1, price: 45.00 }
+    ]
+  },
+  {
+    id: 1003,
+    total: 149.50,
+    status: 'processing',
+    date: '2023-11-01',
+    items: [
+      { name: "Smart Fitness Watch Pro", quantity: 1, price: 149.50 }
+    ]
+  }
+];
+
 // Service Methods
 export const api = {
   checkRegistration: async (): Promise<User> => {
@@ -69,11 +102,19 @@ export const api = {
     });
   },
 
-  register: async (referrerId: string): Promise<User> => {
+  checkReferrer: async (id: string): Promise<boolean> => {
+    return new Promise((resolve) => {
+      // Mock logic: IDs starting with '8' are invalid, others valid
+      setTimeout(() => resolve(!id.startsWith('8')), 600);
+    });
+  },
+
+  register: async (referrerId: string, phone: string): Promise<User> => {
     return new Promise((resolve) => {
       setTimeout(() => {
         mockUser.is_registered = true;
         mockUser.referrer_id = parseInt(referrerId);
+        mockUser.phone_number = phone;
         resolve(mockUser);
       }, 1000);
     });
@@ -105,5 +146,19 @@ export const api = {
 
   withdraw: async (tierId: number): Promise<boolean> => {
      return new Promise(resolve => setTimeout(() => resolve(true), 1000));
+  },
+
+  getOrders: async (): Promise<Order[]> => {
+    return new Promise(resolve => setTimeout(() => resolve(mockOrders), 800));
+  },
+
+  confirmReceipt: async (orderId: number): Promise<boolean> => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const order = mockOrders.find(o => o.id === orderId);
+        if (order) order.status = 'delivered';
+        resolve(true);
+      }, 1000);
+    });
   }
 };

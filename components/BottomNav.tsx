@@ -12,6 +12,7 @@ const BottomNav: React.FC = () => {
     { path: '/', icon: Home, label: 'Home' },
     { path: '/cart', icon: ShoppingBag, label: 'Cart' },
     { path: '/wallet', icon: Wallet, label: 'Wallet' },
+    { path: '/profile', icon: UserIcon, label: 'Profile' },
   ];
 
   const handleNav = (path: string) => {
@@ -21,15 +22,16 @@ const BottomNav: React.FC = () => {
     }
   };
 
-  // Don't show on product detail or checkout to maximize screen real estate or focus
-  if (location.pathname.startsWith('/product/') || location.pathname === '/checkout' || location.pathname === '/login') {
+  // Don't show on product detail, checkout or login
+  const hidePaths = ['/product/', '/checkout', '/login'];
+  if (hidePaths.some(p => location.pathname.startsWith(p))) {
     return null;
   }
 
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 pb-safe pt-2 px-6 flex justify-between items-center z-50 h-[80px]">
       {navItems.map((item) => {
-        const isActive = location.pathname === item.path;
+        const isActive = location.pathname === item.path || (item.path === '/profile' && location.pathname === '/orders');
         return (
           <button
             key={item.path}
