@@ -1,0 +1,7 @@
+{
+  "name": "Lunar Social TMA",
+  "description": "Telegram Mini App for Lunar Social E-commerce. Features point rebates, infinite referral visualization, and multi-wallet asset management.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
