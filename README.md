@@ -1,20 +1,33 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Lunar Social TMA
 
-# Run and deploy your AI Studio app
+This is a Monorepo containing the Frontend and Backend for the Lunar Social Telegram Mini App.
 
-This contains everything you need to run your app locally.
+## Project Structure
 
-View your app in AI Studio: https://ai.studio/apps/drive/1RYeH0ZCAtYiaz4xB44IKSPiSsNlbiV3P
+- **frontend/**: A React application built with Vite and TypeScript.
+- **backend/**: A Laravel 11 application tailored for E-commerce (Lunar).
 
-## Run Locally
+## Getting Started
 
-**Prerequisites:**  Node.js
+### Frontend
 
+Navigate to the frontend directory:
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+### Backend
+
+Navigate to the backend directory:
+
+```bash
+cd backend
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate
+php artisan serve
+```
